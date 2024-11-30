@@ -1,35 +1,36 @@
-import React from "react";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import {
   Box,
+  Button,
   Heading,
   HStack,
   IconButton,
   Image,
-  useColorModeValue,
-  Text,
-  useToast,
-  Modal,
-  useDisclosure,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  VStack,
   Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
   ModalFooter,
-  Button,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useColorModeValue,
+  useDisclosure,
+  useToast,
+  VStack,
 } from "@chakra-ui/react";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useProductStore } from "../store/product";
 import { useState } from "react";
 
 const ProductCard = ({ product }) => {
   const [updatedProduct, setUpdatedProduct] = useState(product);
+
   const textColor = useColorModeValue("gray.600", "gray.200");
   const bg = useColorModeValue("white", "gray.800");
-  const toast = useToast();
+
   const { deleteProduct, updateProduct } = useProductStore();
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleDeleteProduct = async (pid) => {
@@ -63,16 +64,14 @@ const ProductCard = ({ product }) => {
         status: "error",
         duration: 3000,
         isClosable: true,
-        position: "top"
       });
     } else {
       toast({
         title: "Success",
-        description: "Product updated Successfully",
+        description: "Product updated successfully",
         status: "success",
         duration: 3000,
         isClosable: true,
-        position: "top"
       });
     }
   };
@@ -83,7 +82,7 @@ const ProductCard = ({ product }) => {
       rounded="lg"
       overflow="hidden"
       transition="all 0.3s"
-      _hover={{ transform: "translateY(-5px", shadow: "xl" }}
+      _hover={{ transform: "translateY(-10px)", shadow: "xl" }}
       bg={bg}
     >
       <Image
@@ -93,13 +92,16 @@ const ProductCard = ({ product }) => {
         w="full"
         objectFit="cover"
       />
+
       <Box p={4}>
         <Heading as="h3" size="md" mb={2}>
           {product.name}
         </Heading>
+
         <Text fontWeight="bold" fontSize="xl" color={textColor} mb={4}>
           ${product.price}
         </Text>
+
         <HStack spacing={2}>
           <IconButton icon={<EditIcon />} onClick={onOpen} colorScheme="blue" />
           <IconButton
@@ -109,8 +111,10 @@ const ProductCard = ({ product }) => {
           />
         </HStack>
       </Box>
+
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
+
         <ModalContent>
           <ModalHeader>Update Product</ModalHeader>
           <ModalCloseButton />
@@ -167,5 +171,4 @@ const ProductCard = ({ product }) => {
     </Box>
   );
 };
-
 export default ProductCard;
